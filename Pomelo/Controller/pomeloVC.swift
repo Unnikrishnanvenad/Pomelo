@@ -99,7 +99,7 @@ extension pomeloVC{
         }
     }
     fileprivate func setupNavBar() {
-        navigationItem.title = "Pomelo Pick Up"
+        navigationItem.title = "Pomelo"
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.barTintColor = .white//UIColor.rgb(r: 50, g: 199, b: 242)
@@ -201,7 +201,7 @@ extension pomeloVC{
     }
     @objc func sortbtnAction() {
            var SortAlert = UIAlertController()
-           SortAlert = UIAlertController(title: "Sort by", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+           SortAlert = UIAlertController(title: "Sort by distance from your current location", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
            SortAlert.addAction(UIAlertAction(title: "Distance Acsending", style: .default, handler: { action in
                self.ascending = true
                self.allLocations = self.allLocations.sorted { $0.distance! < $1.distance!}
