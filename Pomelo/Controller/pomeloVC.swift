@@ -62,27 +62,26 @@ extension pomeloVC{
 }
 extension pomeloVC{
      //MARK:- Private methods
-    fileprivate func Show_NVActivityAlert(Text:String){
-        Stop_NVActivity()
+    fileprivate func show_NVActivityAlert(Text:String){
+        stop_NVActivity()
         let indicatorType = presentingIndicatorTypes[selectedIndicatorIndex]
         startAnimating(size, message: Text, type: indicatorType, fadeInAnimation: nil)
         NVActivityIndicatorPresenter.sharedInstance.setMessage(Text)
     }
-    fileprivate func Stop_NVActivity(){
+    fileprivate func stop_NVActivity(){
         stopAnimating()
         NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
     }
     fileprivate func scanLocation(){
         if NetworkReachability.sharedNetwork.connectedToNetwork(){
-            
-        if CLLocationManager.locationServicesEnabled(){
+            if CLLocationManager.locationServicesEnabled(){
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined:
                 locationManager.requestWhenInUseAuthorization()
             case .denied, .restricted:
                 break
             case .authorizedAlways, .authorizedWhenInUse:
-                Show_NVActivityAlert(Text: "Fetching current location")
+                show_NVActivityAlert(Text: "Fetching current location")
                 locationManager.requestLocation()
                 break
             default:
@@ -106,10 +105,8 @@ extension pomeloVC{
         navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        let checkInImage = UIImage(named: "pin")
-        barBtnLocation = UIBarButtonItem(image: checkInImage, style: .plain, target: self, action: #selector(getCurrentLocation(sender:)))
+        barBtnLocation = UIBarButtonItem(image: UIImage(named: "pin"), style: .plain, target: self, action: #selector(getCurrentLocation(sender:)))
         self.navigationItem.rightBarButtonItems = [barBtnLocation]
-        
     }
 }
 extension pomeloVC{
@@ -142,7 +139,7 @@ extension pomeloVC{
         }
         self.ascending = true
         self.allLocations = self.allLocations.sorted { $0.distance! < $1.distance!}
-        Stop_NVActivity()
+        stop_NVActivity()
         DispatchQueue.main.async {
             self.tbl.reloadData()
         }
@@ -151,11 +148,11 @@ extension pomeloVC{
         self.tbl.isHidden = false
          lblStatus.isHidden = true
         if NetworkReachability.sharedNetwork.connectedToNetwork(){
-            Show_NVActivityAlert(Text: "")
+            show_NVActivityAlert(Text: "")
         self.allLocations = []
         Service.sharedService.fetchLocations{ (Locations, succeed) in
             if succeed == false{
-                self.Stop_NVActivity()
+                self.stop_NVActivity()
                 self.tbl.isHidden = true
                 self.lblStatus.text = "Server unavailable"
                 self.lblStatus.isHidden = false
@@ -190,7 +187,7 @@ extension pomeloVC{
                 
                 self.allLocations.append(Location.init(address1: address1, city: city, active: active, latitude: latitude, longitude: longitude, alias: alias, distance: 0.0)!)
             }
-            self.Stop_NVActivity()
+            self.stop_NVActivity()
             DispatchQueue.main.async {
                 self.tbl.reloadData()
             }
@@ -302,7 +299,7 @@ extension pomeloVC: CLLocationManagerDelegate{
         syncLocations(locations: [userLocation])
     }
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        self.Stop_NVActivity()
+        self.stop_NVActivity()
     }
     
 }
