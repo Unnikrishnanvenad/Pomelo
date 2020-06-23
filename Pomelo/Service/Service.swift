@@ -15,17 +15,18 @@ import SwiftyJSON
 class Service: NSObject {
     static let sharedService = Service()
     
-    func fetchLocations(completion: @escaping ([[String:Any]], Error?) -> ()) {
+    func fetchLocations(completion: @escaping ([[String:Any]], _ Succeeded: Bool) -> ()) {
         let urlString = "https://api-staging.pmlo.co/v3/pickup-locations/"
         AF.request(urlString, method:.get, parameters: nil,encoding: JSONEncoding.prettyPrinted, headers: nil).responseJSON {
             response in
             DispatchQueue.main.async {
                 switch response.result {
                 case .success:
-                    completion(self.parseJSON(reports: JSON(response.data ?? Data())), nil)
+                    completion(self.parseJSON(reports: JSON(response.data ?? Data())), true)
                     break
                 case .failure(let error):
                     print(error)
+                    completion([], false)
                 }
             }
         }

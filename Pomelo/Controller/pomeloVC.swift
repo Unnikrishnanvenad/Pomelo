@@ -153,9 +153,13 @@ extension pomeloVC{
         if NetworkReachability.sharedNetwork.connectedToNetwork(){
             Show_NVActivityAlert(Text: "")
         self.allLocations = []
-        Service.sharedService.fetchLocations{ (Locations, err) in
-            if let err = err {
-                print("Failed to fetch courses:", err)
+        Service.sharedService.fetchLocations{ (Locations, succeed) in
+            if succeed == false{
+                self.Stop_NVActivity()
+                self.tbl.isHidden = true
+                self.lblStatus.text = "Server unavailable"
+                self.lblStatus.isHidden = false
+                self.showMessage("Server unavailable", type: .warning)
                 return
             }
             for element in Locations{
@@ -194,6 +198,7 @@ extension pomeloVC{
         }else{
             self.tbl.isHidden = true
             lblStatus.isHidden = false
+            self.lblStatus.text = "No network"
             self.showMessage("No network", type: .warning)
         }
     }
