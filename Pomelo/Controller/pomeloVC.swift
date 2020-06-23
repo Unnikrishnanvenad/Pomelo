@@ -199,7 +199,7 @@ extension pomeloVC{
     }
     @objc func sortbtnAction() {
            var SortAlert = UIAlertController()
-           SortAlert = UIAlertController(title: "Sort by distance from your current location", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
+        SortAlert = UIAlertController(title: "Sort by distance from your current location", message: nil, preferredStyle:(UIDevice.current.userInterfaceIdiom == .pad) ? .alert : .actionSheet)
            SortAlert.addAction(UIAlertAction(title: "Distance Ascending", style: .default, handler: { action in
                self.ascending = true
                self.allLocations = self.allLocations.sorted { $0.distance! < $1.distance!}
