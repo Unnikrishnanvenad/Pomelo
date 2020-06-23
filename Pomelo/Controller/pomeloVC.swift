@@ -102,7 +102,7 @@ extension pomeloVC{
         navigationItem.title = "Pomelo"
         navigationController?.navigationBar.backgroundColor = .white
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = .white//UIColor.rgb(r: 50, g: 199, b: 242)
+        navigationController?.navigationBar.barTintColor = .white
         navigationController?.navigationBar.tintColor = .black
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
@@ -158,7 +158,6 @@ extension pomeloVC{
                 print("Failed to fetch courses:", err)
                 return
             }
-            print(Locations)
             for element in Locations{
                 var active = Bool()
                 var address1 = ""
@@ -187,7 +186,6 @@ extension pomeloVC{
                 
                 self.allLocations.append(Location.init(address1: address1, city: city, active: active, latitude: latitude, longitude: longitude, alias: alias, distance: 0.0)!)
             }
-            
             self.Stop_NVActivity()
             DispatchQueue.main.async {
                 self.tbl.reloadData()
@@ -202,7 +200,7 @@ extension pomeloVC{
     @objc func sortbtnAction() {
            var SortAlert = UIAlertController()
            SortAlert = UIAlertController(title: "Sort by distance from your current location", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
-           SortAlert.addAction(UIAlertAction(title: "Distance Acsending", style: .default, handler: { action in
+           SortAlert.addAction(UIAlertAction(title: "Distance Ascending", style: .default, handler: { action in
                self.ascending = true
                self.allLocations = self.allLocations.sorted { $0.distance! < $1.distance!}
                DispatchQueue.main.async {
@@ -230,7 +228,6 @@ extension pomeloVC{
            }
            self.present(SortAlert, animated: true, completion: nil)
        }
-    
 }
 
 extension pomeloVC: UITableViewDelegate,UITableViewDataSource{
@@ -249,18 +246,19 @@ extension pomeloVC: UITableViewDelegate,UITableViewDataSource{
     }
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let CellIdentifier = "cell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: CellIdentifier)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         var lblTitle = UILabel()
         var lblSubTitle = UILabel()
         var lblBottomTitle = UILabel()
         var lblDistance = UILabel()
         var imageView = UIImageView()
+        
         lblTitle = cell?.viewWithTag(100) as! UILabel
         lblSubTitle = cell?.viewWithTag(101) as! UILabel
         lblBottomTitle = cell?.viewWithTag(102) as! UILabel
         lblDistance = cell?.viewWithTag(103) as! UILabel
         imageView = cell?.viewWithTag(50) as! UIImageView
+        
         if allLocations.count > 0{
             let locationData = allLocations[indexPath.row]
             lblTitle.text = "City: " + locationData.city!
@@ -273,7 +271,6 @@ extension pomeloVC: UITableViewDelegate,UITableViewDataSource{
             }else{
                 imageView.image = UIImage(named: "dot")
             }
-            
         }
         let view = UIView()
         view.backgroundColor = UIColor.lightGray.withAlphaComponent(0.4)
@@ -291,8 +288,6 @@ extension pomeloVC: UITableViewDelegate,UITableViewDataSource{
             self.tbl.reloadData()
         }
     }
-    
-    
 }
 extension pomeloVC: CLLocationManagerDelegate{
     //MARK:- Location delegate
