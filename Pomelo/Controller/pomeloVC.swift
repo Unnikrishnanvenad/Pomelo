@@ -22,6 +22,7 @@ class pomeloVC: UIViewController ,NVActivityIndicatorViewable{
     var currentSortCategories = [String]()
     var locationManager: CLLocationManager = CLLocationManager()
     
+    @IBOutlet weak var toolbar: UIToolbar!
     var latitude :Double!
     var longitude:Double!
     var allLocations = [Location]()
@@ -107,6 +108,8 @@ extension pomeloVC{
         navigationController?.navigationBar.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         barBtnLocation = UIBarButtonItem(image: UIImage(named: "pin"), style: .plain, target: self, action: #selector(getCurrentLocation(sender:)))
         self.navigationItem.rightBarButtonItems = [barBtnLocation]
+        self.toolbar.backgroundColor = .white
+         self.toolbar.barTintColor = .white
     }
 }
 extension pomeloVC{

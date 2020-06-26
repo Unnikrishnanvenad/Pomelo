@@ -146,6 +146,7 @@
                     <connections>
                         <outlet property="lblStatus" destination="GJK-s3-qZ3" id="e3B-QM-tp0"/>
                         <outlet property="tbl" destination="wDQ-6O-Fek" id="Tf4-Xu-goE"/>
+                        <outlet property="toolbar" destination="K9F-SD-hST" id="yev-9n-GbS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
