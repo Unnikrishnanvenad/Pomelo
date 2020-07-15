@@ -17,7 +17,7 @@ class Service: NSObject {
     
     func fetchLocations(completion: @escaping ([[String:Any]], _ Succeeded: Bool) -> ()) {
         let urlString = "https://api-staging.pmlo.co/v3/pickup-locations/"
-        AF.request(urlString, method:.get, parameters: nil,encoding: JSONEncoding.prettyPrinted, headers: nil).responseJSON {
+        AF.request(urlString, method:.get, parameters: nil,encoding: JSONEncoding.prettyPrinted, headers: nil) .validate(statusCode: 200..<300).responseJSON {
             response in
             DispatchQueue.main.async {
                 switch response.result {
